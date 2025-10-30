@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Ficha de Consulta - Nutripy{% endblock %}
+{% block content %}
+<div class="ficha-consulta">
+    <h2>Ficha de Consulta</h2>
+
+    <p><strong>Paciente:</strong> {{ consulta.paciente.nombre }}</p>
+    <p><strong>Resumen:</strong> {{ consulta.resumen }}</p>
+    <p><strong>Fecha:</strong> {{ consulta.fecha }}</p>
+
+    <h3>Firma Digital:</h3>
+    {% if consulta.firma_img %}
+        <img src="{{ consulta.firma_img }}" alt="Firma del paciente" width="300">
+    {% else %}
+        <p>No hay firma registrada.</p>
+    {% endif %}
+
+    <h4>Firma Criptográfica:</h4>
+    <div class="firma-criptografica">{{ consulta.firma_cripto }}</div>
+
+    <button onclick="window.print()">🖨️ Imprimir Ficha</button>
+</div>
+{% endblock %}

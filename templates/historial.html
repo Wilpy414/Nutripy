@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Historial de Consultas - Nutripy{% endblock %}
+{% block content %}
+<div class="historial-consultas">
+    <h2>Historial de Consultas</h2>
+
+    <p><strong>Paciente:</strong> {{ paciente.nombre }}</p>
+    <p><strong>Edad:</strong> {{ paciente.edad }} años</p>
+    <p><strong>Teléfono:</strong> {{ paciente.telefono }}</p>
+    <p><strong>Cédula:</strong> {{ paciente.cedula }}</p>
+    <p><strong>Notas:</strong> {{ paciente.notas }}</p>
+
+    {% if paciente.consultas %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Resumen</th>
+                    <th>Ver Ficha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consulta in paciente.consultas %}
+                <tr>
+                    <td>{{ consulta.fecha }}</td>
+                    <td>{{ consulta.resumen[:50] }}...</td>
+                    <td><a href="{{ url_for('ver_consulta', id=consulta.id) }}">Ver</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay consultas registradas para este paciente.</p>
+    {% endif %}
+</div>
+{% endblock %}

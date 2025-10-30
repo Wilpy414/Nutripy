@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Pacientes - Nutripy{% endblock %}
+{% block content %}
+<h2>Listado de Pacientes</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for paciente in pacientes %}
+        <tr>
+            <td>{{ paciente.id }}</td>
+            <td>{{ paciente.nombre }}</td>
+            <td>{{ paciente.edad }}</td>
+            <td>{{ paciente.telefono }}</td>
+            <td>
+                <a href="{{ url_for('editar_paciente', id=paciente.id) }}">Editar</a> |
+                <a href="{{ url_for('historial_consultas', id=paciente.id) }}">Consultas</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

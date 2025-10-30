@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Nutripy{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🥗 Sistema Nutripy</h1>
+        <nav>
+            <a href="{{ url_for('ver_pacientes') }}">Pacientes</a>
+            <a href="{{ url_for('nuevo_paciente') }}">Nuevo Paciente</a>
+            {% if paciente %}
+                <a href="{{ url_for('nueva_consulta', id=paciente.id) }}">Registrar consulta</a>
+            {% endif %}
+            <a href="{{ url_for('logout') }}">Salir</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2025 Nutripy - Consultorio de Nutrición</p>
+    </footer>
+</body>
+</html>

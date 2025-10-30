@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Registrar Consulta - Nutripy{% endblock %}
+{% block content %}
+<div class="formulario-consulta" role="form">
+    <h2>Registrar Consulta</h2>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash" role="alert">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form id="consultaForm" method="POST" action="{{ url_for('nueva_consulta', id=paciente.id) }}">
+        <p><strong>Paciente:</strong> {{ paciente.nombre }}</p>
+
+        <label for="resumen">Resumen:</label>
+        <textarea id="resumen" name="resumen" required placeholder="Describa brevemente el motivo de la consulta..." aria-label="Resumen de la consulta"></textarea>
+
+        <h3>Firma del Paciente:</h3>
+        <canvas id="canvas" width="400" height="150" style="border:1px solid #000; touch-action: none;" aria-label="Área de firma"></canvas>
+        <br>
+        <button type="button" onclick="limpiarFirma()">🧹 Borrar Firma</button>
+        <input type="hidden" name="firma_img" id="firma_img">
+        <br><br>
+        <button type="submit" id="guardarBtn">💾 Guardar Consulta</button>
+        <button type="button" onclick="window.print()">🖨️ Imprimir</button>
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/signature_pad.min.js') }}"></script>
+<script>
+  window.onload = function() {
+    const canvas = document.getElementById('canvas');
+    const signaturePad = new SignaturePad(canvas);
+    const form = document.getElementById('consultaForm');
+    const firmaInput = document.getElementById('firma_img');
+    const guardarBtn = document.getElementById('guardarBtn');
+
+    // Función para borrar la firma sin confirmación
+    function limpiarFirma() {
+      signaturePad.clear();
+    }
+    window.limpiarFirma = limpiarFirma;
+
+    // Validación antes de enviar el formulario
+    form.addEventListener('submit', function(e) {
+      if (signaturePad.isEmpty()) {
+        e.preventDefault();
+        alert("Por favor, firme antes de guardar.");
+      } else {
+        firmaInput.value = signaturePad.toDataURL();
+        guardarBtn.disabled = true;
+      }
+    });
+  };
+</script>
+{% endblock %}
