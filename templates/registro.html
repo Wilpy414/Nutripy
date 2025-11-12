@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Registro - Nutripy{% endblock %}
+{% block content %}
+<div class="formulario">
+    <h2>Crear Cuenta</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="toast" class="toast-error">
+                ⚠️ {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
+
+    <form method="POST" onsubmit="return validarRegistro()">
+        <label>Usuario:</label>
+        <input type="text" name="username" required>
+
+        <label>Contraseña:</label>
+        <input type="password" name="password" id="password" required>
+
+        <label>Repetir Contraseña:</label>
+        <input type="password" name="confirm_password" id="confirm_password" required>
+
+        <button type="submit">Registrarse</button>
+    </form>
+</div>
+
+<script>
+function mostrarToast(mensaje) {
+    const toast = document.createElement("div");
+    toast.className = "toast-error";
+    toast.textContent = mensaje;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 4000);
+}
+
+function validarRegistro() {
+    const pass = document.getElementById('password').value;
+    const confirm = document.getElementById('confirm_password').value;
+    if (pass !== confirm) {
+        mostrarToast("⚠️ Las contraseñas no coinciden");
+        document.getElementById('password').value = '';
+        document.getElementById('confirm_password').value = '';
+        return false;
+    }
+    return true;
+}
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const toast = document.getElementById("toast");
+    if (toast) {
+        setTimeout(() => {
+            toast.remove();
+        }, 4000);
+    }
+});
+</script>
+
+{% endblock %}

@@ -7,6 +7,7 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
+    padding-bottom: 60px; /* espacio para el footer fijo */
 }
 
 header {
@@ -270,6 +271,18 @@ button:hover {
     background-color: #2980b9;
 }
 
+.botones-firma {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+main {
+    min-height: 75vh; /* Asegura espacio entre contenido y footer */
+}
+
 /* ==========================
    HISTORIAL DE CONSULTAS
    ========================== */
@@ -307,6 +320,8 @@ button:hover {
     text-decoration: underline;
 }
 
+
+
 /* ==========================
    FIRMA CANVAS
    ========================== */
@@ -321,15 +336,15 @@ canvas {
    PIE DE PÁGINA
    ========================== */
 footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #264653;
-  color: white;
-  text-align: center;
-  padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #264653;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    z-index: 10; /* Asegura que el footer esté por encima */
 }
-
 
 /* ==========================
    RESPONSIVIDAD
@@ -348,5 +363,46 @@ footer {
 
     button {
         width: 100%;
+    }
+}
+
+
+/* ==========================
+   ESTILOS ESPECÍFICOS PARA LOGIN
+   ========================== */
+.toast-error {
+    position: fixed;
+    left: 50%;
+    bottom: -100px;
+    transform: translateX(-50%);
+    background-color: #e74c3c;
+    color: white;
+    padding: 14px 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    font-weight: bold;
+    z-index: 9999;
+    text-align: center;
+    max-width: 80%;
+    animation: slideUpFade 4s forwards;
+    font-size: 16px;
+}
+
+@keyframes slideUpFade {
+    0% {
+        bottom: -100px;
+        opacity: 0;
+    }
+    20% {
+        bottom: 50%;
+        opacity: 1;
+    }
+    80% {
+        bottom: 50%;
+        opacity: 1;
+    }
+    100% {
+        bottom: 50%;
+        opacity: 0;
     }
 }

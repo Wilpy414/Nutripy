@@ -81,6 +81,54 @@ def init():
         db.session.commit()
     return "Base de datos inicializada y usuario admin creado."
 
+# === REGISTRO DE USUARIO ===
+@app.route('/registro', methods=['GET', 'POST'])
+def registro():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        if password != confirm_password:
+            flash('Las contraseñas no coinciden')
+            return render_template('registro.html')
+
+        if User.query.filter_by(username=username).first():
+            flash('El usuario ya existe')
+            return redirect(url_for('registro'))
+
+        hashed_password = generate_password_hash(password)
+        db.session.add(User(username=username, password=hashed_password))
+        db.session.commit()
+        flash('Usuario creado correctamente')
+        return redirect(url_for('login'))
+
+    return render_template('registro.html')
+
+# === RESTABLECER CONTRASEÑA ===
+@app.route('/reset', methods=['GET', 'POST'])
+def reset():
+    if request.method == 'POST':
+        username = request.form['username']
+        nuevo_pass = request.form['password']
+        confirm_pass = request.form['confirm_password']
+
+        if nuevo_pass != confirm_pass:
+            flash('⚠️ Las contraseñas no coinciden')
+            return redirect(url_for('reset'))
+
+        user = User.query.filter_by(username=username).first()
+        if user:
+            user.password = generate_password_hash(nuevo_pass)
+            db.session.commit()
+            flash('✅ Contraseña actualizada correctamente')
+            return redirect(url_for('login'))
+        else:
+            flash('⚠️ Usuario no encontrado')
+            return redirect(url_for('reset'))
+
+    return render_template('reset.html')
+
 # === RUTAS PRINCIPALES ===
 @app.route('/')
 @login_required

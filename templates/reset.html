@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Restablecer Contraseña - Nutripy{% endblock %}
+{% block content %}
+<div class="formulario">
+    <h2>Restablecer Contraseña</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="toast" class="toast-error">
+        {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" onsubmit="return validarReset()">
+        <label>Usuario:</label>
+        <input type="text" name="username" required>
+
+        <label>Nueva Contraseña:</label>
+        <input type="password" name="password" id="new_password" required>
+
+        <label>Repetir Contraseña:</label>
+        <input type="password" name="confirm_password" id="confirm_new_password" required>
+
+        <button type="submit">Actualizar</button>
+    </form>
+</div>
+
+<script>
+function validarReset() {
+    const pass = document.getElementById('new_password').value;
+    const confirm = document.getElementById('confirm_new_password').value;
+    if (pass !== confirm) {
+        alert("Las contraseñas no coinciden");
+        return false;
+    }
+    return true;
+}
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const toast = document.getElementById("toast");
+    if (toast) {
+        setTimeout(() => {
+            toast.remove();
+        }, 4000);
+    }
+});
+</script>
+
+{% endblock %}

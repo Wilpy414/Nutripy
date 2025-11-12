@@ -23,5 +23,9 @@
 
         <button type="submit">Entrar</button>
     </form>
+
+    <p>¿No tenés cuenta? <a href="{{ url_for('registro') }}">Crear cuenta</a></p>
+    <p>¿Olvidaste tu contraseña? <a href="{{ url_for('reset') }}">Restablecer</a></p>
+
 </div>
 {% endblock %}
