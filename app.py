@@ -14,7 +14,7 @@ from flask_migrate import Migrate
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'clave_nutripy'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR, 'instance', 'nutripy.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://nutripy_admin:1234@localhost/nutripy'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
